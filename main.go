@@ -3,11 +3,15 @@ package main
 import (
 	"encoding/json"
 	"flag"
+	"fmt"
 	"io/ioutil"
 	"log"
 	"net/smtp"
 	"path"
 	"strconv"
+	"syscall"
+
+	"golang.org/x/term"
 )
 
 func main() {
@@ -27,10 +31,17 @@ func main() {
 	// read text file and get file name for email subject
 	content, read_err := ioutil.ReadFile(*filepath)
 	if read_err != nil {
-		log.Fatal("Read Error: ", read_err)
+		log.Fatal("Read error: ", read_err)
 	}
 	filename := path.Base(*filepath)
 	filetext := string(content)
+
+	// ask for password
+	fmt.Println("Please enter password:")
+	password, pass_err := term.ReadPassword(int(syscall.Stdin))
+	if pass_err != nil {
+		log.Fatal("Password error: ", pass_err)
+	}
 
 	// authenticate email using credentials in json file
 	cred_data, credread_err := ioutil.ReadFile("./credentials.json")
@@ -39,10 +50,9 @@ func main() {
 	}
 
 	type Credentials struct {
-		Username string
-		Password string
-		Server   string
-		Port     int
+		Email  string
+		Server string
+		Port   int
 	}
 
 	var credentials Credentials
@@ -51,8 +61,7 @@ func main() {
 	if auth_err != nil {
 		log.Fatal("Auth error: ", auth_err)
 	}
-
-	auth := smtp.PlainAuth("", credentials.Username, credentials.Password, credentials.Server)
+	auth := smtp.PlainAuth("", credentials.Email, string(password), credentials.Server)
 
 	// send email
 	to := []string{*receiver}
@@ -60,8 +69,9 @@ func main() {
 		"Subject:" + filename + "\r\n" +
 		"\r\n" +
 		filetext)
-	send_err := smtp.SendMail(credentials.Server+":"+strconv.Itoa(credentials.Port), auth, credentials.Username, to, msg)
+	send_err := smtp.SendMail(credentials.Server+":"+strconv.Itoa(credentials.Port), auth, credentials.Email, to, msg)
 	if send_err != nil {
-		log.Fatal("Send Error: ", send_err)
+		log.Fatal("Send error: ", send_err)
 	}
+	fmt.Println("Email sent!")
 }
