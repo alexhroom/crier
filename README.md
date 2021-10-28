@@ -1,5 +1,5 @@
 # file_to_email
-Go module that sends a text file as an email.
+Go program that sends a text file as an email.
 
 # Setup
 Currently, file_to_email uses insecure authorisation to send emails. This means it requires you to write your password in plain text in a file. I don't need to tell you why this is a bad idea, but I wouldn't suggest using file_to_email in its current state for anything important.
