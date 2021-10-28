@@ -8,12 +8,11 @@ Go program that sends a text file as an email.
 4. You should now have an executable called file_to_email in the repository. You are done.
 
 # Usage
-Currently, file_to_email uses insecure authorisation to send emails. This means it requires you to write your password in plain text in a file. I don't need to tell you why this is a bad idea, but I wouldn't suggest using file_to_email in its current state for anything important.
+Currently, file_to_email uses basic authorisation to send emails. This means if you send an email via Gmail, it will almost certainly end up in people's spam folders. I'm trying to find a way to work around this.
 
 In the file credentials.json, fill out the fields with the following:
 
-- `username`: the email address you'd like to send from.
-- `password`: the password for this email address. (will be replaced when authorisation is better)
+- `email`: the email address you'd like to send from.
 - `server`: the SMTP email server. For example, for gmail this would be `smtp.gmail.com`. Most email services have their SMTP details somewhere on their website.
 - `port`: the outgoing port of the SMTP email server. For example, again for gmail this is 587. Again, most services have this on their website.
 
