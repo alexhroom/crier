@@ -5,6 +5,7 @@ import (
 	"bufio"
 	"fmt"
 	"os"
+	"regexp"
 	"strings"
 )
 
@@ -56,8 +57,22 @@ func CreateEmail(ContentFile string, RecipientsFile string, Cc string) Email {
 		contentSlice = append(contentSlice, content_scanner.Text())
 	}
 	// set first line of email as subject
-	email.Subject = contentSlice[0]
+	email.Subject = striphtml(contentSlice[0])
 	email.Message = strings.Join(contentSlice, "\r\n")
 
 	return email
+}
+
+// Strips HTML from a string.
+func striphtml(in string) string {
+	// regex to match html tag
+	const pattern = `(<\/?[a-zA-A]+?[^>]*\/?>)*`
+	r := regexp.MustCompile(pattern)
+	groups := r.FindAllString(in, -1)
+	for _, group := range groups {
+		if strings.TrimSpace(group) != "" {
+			in = strings.ReplaceAll(in, group, "")
+		}
+	}
+	return in
 }

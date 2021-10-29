@@ -13,6 +13,7 @@ func main() {
 	file := flag.String("file", "NA", "The path to the text file that you would like to send as an email.")
 	mailing_list := flag.String("list", "NA", "The receiver of the email.")
 	cc := flag.String("cc", "None", "Optionally add an address to cc the file to. This could be your own address.")
+	mimetype := flag.String("mime", "text/plain", "Optionally specify the MIME type. This defaults to plaintext, but if you're using HTML then specify text/html.")
 
 	flag.Parse()
 
@@ -30,5 +31,5 @@ func main() {
 	email := src.CreateEmail(*file, *mailing_list, *cc)
 	credentials, auth := src.Auth()
 
-	src.SendEmail(email, credentials, auth)
+	src.SendEmail(email, *mimetype, credentials, auth)
 }

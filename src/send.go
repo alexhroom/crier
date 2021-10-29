@@ -1,4 +1,4 @@
-// Contains functions that send an Email struct.
+// Contains functions to send an Email struct.
 package src
 
 import (
@@ -9,6 +9,7 @@ import (
 	"net/smtp"
 	"strconv"
 	"syscall"
+	"time"
 
 	"golang.org/x/term"
 )
@@ -45,13 +46,27 @@ func Auth() (Credentials, smtp.Auth) {
 }
 
 // Sends an Email
-func SendEmail(email Email, credentials Credentials, auth smtp.Auth) {
-	// send email
+func SendEmail(email Email, mimetype string, credentials Credentials, auth smtp.Auth) {
+	// create vars for SMTP headers
+	now := time.Now()
 	to := []string{email.To}
-	msg := []byte("To:" + email.To + "\r\n" +
-		"Subject:" + email.Subject + "\r\n" +
-		"\r\n" +
-		email.Message)
+	cc := ""
+	if email.Cc != "None" {
+		cc = "Cc:" + email.Cc + "\r\n"
+	}
+	subject := "Subject:" + email.Subject + "\r\n"
+	mime := "MIME-version: 1.0;\nContent-Type: " + mimetype + "; charset=\"UTF-8\";\n\n"
+	msg := []byte(
+		// SMTP headers are set up here
+		"Date:" + now.Format(time.RFC1123Z) + "\r\n" +
+			"From:" + credentials.Email + "\r\n" +
+			"To:" + email.To + "\r\n" +
+			cc +
+			subject +
+			mime +
+			"\r\n" +
+			// SMTP payload is email.Message
+			email.Message)
 	send_err := smtp.SendMail(credentials.Server+":"+strconv.Itoa(credentials.Port), auth, credentials.Email, to, msg)
 	if send_err != nil {
 		log.Fatal("Send error: ", send_err)
