@@ -8,8 +8,6 @@ Go program that sends a text file as an email.
 4. You should now have an executable called file_to_email in the repository. You are done.
 
 # Usage
-Currently, file_to_email uses basic authorisation to send emails. This means if you send an email via Gmail, it will almost certainly end up in people's spam folders (as Gmail automatically categorises Gmail emails sent using basic authorisation as spam). I'm trying to find a way to work around this. Hopefully it doesn't do so when you use your own domain.
-
 In the file credentials.json, fill out the fields with the following:
 
 - `email`: the email address you'd like to send from.
@@ -18,9 +16,13 @@ In the file credentials.json, fill out the fields with the following:
 
 To then send a content file as an email, from a terminal in the repository type the following:
 
-`file_to_email -file [content file path] -list [mailing list path]`
+`file_to_email -file [content file path] -list [mailing list path] [options]`
 
-where [path] is the path to your text file and [email] is the email you'd like to send to.
+where `[content file path]` is the path to your content file and `[mailing list path]` is the location of your mailing list file; i.e. a list of email addresses you'd like to send the text file to.
+
+Current supported options are:
+- `-cc [address]`: Cc an email address into the email.
+- `-mime [mimetype]`: Choose the [MIME type of your file](https://www.sitepoint.com/mime-types-complete-list/). Defauls to `text/plain`. If you're using HTML you should set this to `text/html`, or if using CSS you should set this to `text/css`.
 
 # Development
 I'm developing this as a personal project, and would like to build it into a sort of minimalist newsletter client, with better support for formatting & mailing lists. Ideally, users will just be able to run `file_to_email my_newsletter` (or whatever I end up renaming it to. I think Crier might sound catchy) and send a newsletter from the command line.
