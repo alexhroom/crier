@@ -16,9 +16,9 @@ In the file credentials.json, fill out the fields with the following:
 - `server`: the SMTP email server. For example, for gmail this would be `smtp.gmail.com`. Most email services have their SMTP details somewhere on their website.
 - `port`: the outgoing port of the SMTP email server. For example, again for gmail this is 587. Again, most services have this on their website.
 
-To then send a file as an email, from a terminal in the repository type the following:
+To then send a content file as an email, from a terminal in the repository type the following:
 
-`file_to_email -filepath [path] -receiver [email]`
+`file_to_email -file [content file path] -list [mailing list path]`
 
 where [path] is the path to your text file and [email] is the email you'd like to send to.
 
