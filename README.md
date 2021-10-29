@@ -8,7 +8,7 @@ Go program that sends a text file as an email.
 4. You should now have an executable called file_to_email in the repository. You are done.
 
 # Usage
-Currently, file_to_email uses basic authorisation to send emails. This means if you send an email via Gmail, it will almost certainly end up in people's spam folders. I'm trying to find a way to work around this.
+Currently, file_to_email uses basic authorisation to send emails. This means if you send an email via Gmail, it will almost certainly end up in people's spam folders (as Gmail automatically categorises Gmail emails sent using basic authorisation as spam). I'm trying to find a way to work around this. Hopefully it doesn't do so when you use your own domain.
 
 In the file credentials.json, fill out the fields with the following:
 
