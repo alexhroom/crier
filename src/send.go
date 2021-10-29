@@ -50,10 +50,7 @@ func SendEmail(email Email, mimetype string, credentials Credentials, auth smtp.
 	// create vars for SMTP headers
 	now := time.Now()
 	to := []string{email.To}
-	cc := ""
-	if email.Cc != "None" {
-		cc = "Cc:" + email.Cc + "\r\n"
-	}
+	cc := "Cc:" + email.Cc + "\r\n"
 	subject := "Subject:" + email.Subject + "\r\n"
 	mime := "MIME-version: 1.0;\nContent-Type: " + mimetype + "; charset=\"UTF-8\";\n\n"
 	msg := []byte(

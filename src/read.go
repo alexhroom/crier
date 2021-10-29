@@ -44,9 +44,7 @@ func CreateEmail(ContentFile string, RecipientsFile string, Cc string) Email {
 	// convert mailing list to string and add to `To` field
 	// also add Cc if available
 	email.To = strings.Join(recipientsSlice, ", ")
-	if Cc != "None" {
-		email.Cc = Cc
-	}
+	email.Cc = Cc
 
 	// create empty slice to hold content
 	contentSlice := make([]string, 0, 9999)
