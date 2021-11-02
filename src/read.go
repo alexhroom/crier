@@ -39,8 +39,8 @@ func CreateEmail(ContentFile string, RecipientsFile string, Cc string) Email {
 	recipientsSlice := make([]string, 0, 999)
 
 	// add mailing list to slice
-	recipients_scanner := bufio.NewScanner(recipients)
-	for recipients_scanner.Scan() {
+	recipientsScanner := bufio.NewScanner(recipients)
+	for recipientsScanner.Scan() {
 		recipientsSlice = append(recipientsSlice, recipients_scanner.Text())
 	}
 
@@ -53,8 +53,8 @@ func CreateEmail(ContentFile string, RecipientsFile string, Cc string) Email {
 	contentSlice := make([]string, 0, 9999)
 
 	// read text file and get message and subject
-	content_scanner := bufio.NewScanner(content)
-	for content_scanner.Scan() {
+	contentScanner := bufio.NewScanner(content)
+	for contentScanner.Scan() {
 		contentSlice = append(contentSlice, content_scanner.Text())
 	}
 	// set first line of email as subject
