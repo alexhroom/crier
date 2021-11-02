@@ -1,11 +1,11 @@
-# file_to_email
-Go program that sends a text file as an email.
+# crier
+crier is a Go command line utility designed as a streamlined, minimalist newsletter client.
 
 # Setup
 1. [Have Go installed on your machine](https://golang.org/doc/install).
 2. Clone the repository.
 3. Enter the repository and run `go build .` at the terminal.
-4. You should now have an executable called file_to_email in the repository. You are done.
+4. You should now have an executable called crier in the repository. You are done.
 
 # Usage
 In the file credentials.json, fill out the fields with the following:
@@ -16,7 +16,7 @@ In the file credentials.json, fill out the fields with the following:
 
 To then send a content file as an email, from a terminal in the repository type the following:
 
-`file_to_email -file [content file path] -list [mailing list path] [options]`
+`./crier -file [content file path] -list [mailing list path] [options]`
 
 where `[content file path]` is the path to your content file and `[mailing list path]` is the location of your mailing list file; i.e. a list of email addresses you'd like to send the text file to.
 
@@ -25,4 +25,5 @@ Current supported options are:
 - `-mime [mimetype]`: Choose the [MIME type of your file](https://www.sitepoint.com/mime-types-complete-list/). Defauls to `text/plain`. If you're using HTML you should set this to `text/html`, or if using CSS you should set this to `text/css`.
 
 # Development
-I'm developing this as a personal project, and would like to build it into a sort of minimalist newsletter client, with better support for formatting & mailing lists. Ideally, users will just be able to run `file_to_email my_newsletter` (or whatever I end up renaming it to. I think Crier might sound catchy) and send a newsletter from the command line.
+This is a personal project that I am developing for fun, and also to learn Go. I would like to aim future development at making this a more user-friendly experience. For example, I'd like to let users give a style sheet template and be able to write their content in Markdown, and have crier automatically be able to put them together as a html/css document.
+ 

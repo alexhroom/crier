@@ -1,4 +1,3 @@
-// Contains functions that set up the email struct.
 package src
 
 import (
@@ -9,6 +8,9 @@ import (
 	"strings"
 )
 
+// Contains functions that set up the email struct.
+
+// Email is a struct containing the content of an email
 type Email struct {
 	To      string
 	Cc      string
@@ -16,27 +18,28 @@ type Email struct {
 	Message string
 }
 
-// Takes the arguments needed to create an email, and turns them into an Email struct
+// CreateEmail takes the arguments needed to create an email,
+// and turns them into an Email struct
 func CreateEmail(ContentFile string, RecipientsFile string, Cc string) Email {
 	var email Email
 
 	// get recipients list
-	recipients_file, read_recipients_err := os.Open(RecipientsFile)
-	content_file, read_content_err := os.Open(ContentFile)
-	if read_recipients_err != nil {
-		fmt.Println("Recipient file opening error: ", read_recipients_err)
+	recipients, readRecipientsErr := os.Open(RecipientsFile)
+	content, readContentErr := os.Open(ContentFile)
+	if readRecipientsErr != nil {
+		fmt.Println("Recipient file opening error: ", readRecipientsErr)
 	}
-	if read_content_err != nil {
-		fmt.Println("Content file opening error: ", read_content_err)
+	if readContentErr != nil {
+		fmt.Println("Content file opening error: ", readContentErr)
 	}
-	defer recipients_file.Close()
-	defer content_file.Close()
+	defer recipients.Close()
+	defer content.Close()
 
 	// create empty list to hold recipients
 	recipientsSlice := make([]string, 0, 999)
 
 	// add mailing list to slice
-	recipients_scanner := bufio.NewScanner(recipients_file)
+	recipients_scanner := bufio.NewScanner(recipients)
 	for recipients_scanner.Scan() {
 		recipientsSlice = append(recipientsSlice, recipients_scanner.Text())
 	}
@@ -50,7 +53,7 @@ func CreateEmail(ContentFile string, RecipientsFile string, Cc string) Email {
 	contentSlice := make([]string, 0, 9999)
 
 	// read text file and get message and subject
-	content_scanner := bufio.NewScanner(content_file)
+	content_scanner := bufio.NewScanner(content)
 	for content_scanner.Scan() {
 		contentSlice = append(contentSlice, content_scanner.Text())
 	}

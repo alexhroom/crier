@@ -1,4 +1,4 @@
-module github.com/alexhroom/file_to_email
+module github.com/alexhroom/crier
 
 go 1.17
 
