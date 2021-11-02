@@ -41,7 +41,7 @@ func CreateEmail(ContentFile string, RecipientsFile string, Cc string) Email {
 	// add mailing list to slice
 	recipientsScanner := bufio.NewScanner(recipients)
 	for recipientsScanner.Scan() {
-		recipientsSlice = append(recipientsSlice, recipients_scanner.Text())
+		recipientsSlice = append(recipientsSlice, recipientsScanner.Text())
 	}
 
 	// convert mailing list to string and add to `To` field
@@ -55,7 +55,7 @@ func CreateEmail(ContentFile string, RecipientsFile string, Cc string) Email {
 	// read text file and get message and subject
 	contentScanner := bufio.NewScanner(content)
 	for contentScanner.Scan() {
-		contentSlice = append(contentSlice, content_scanner.Text())
+		contentSlice = append(contentSlice, contentScanner.Text())
 	}
 	// set first line of email as subject
 	email.Subject = striphtml(contentSlice[0])
